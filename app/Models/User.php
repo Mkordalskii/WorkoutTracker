@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_active',
     ];
 
     /**
@@ -29,6 +30,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    //ukryte pola
     protected $hidden = [
         'password',
         'remember_token',
@@ -44,6 +47,16 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
+    }
+    //ustawiam relacje
+    public function workouts()
+    {
+        return $this->hasMany(Workout::class);
+    }
+    public function wourkoutLogs()
+    {
+        return $this->hasMany(WorkoutLog::class);
     }
 }
