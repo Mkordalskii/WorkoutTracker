@@ -68,6 +68,12 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('workouts.index') }}" class="nav-link">
+                            Treningi
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <span class="nav-link">
                             {{ auth()->user()->name }}
                         </span>
