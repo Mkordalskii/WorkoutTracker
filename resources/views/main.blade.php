@@ -59,6 +59,11 @@
                         Grupy mięśniowe
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('exercises.index') }}" class="nav-link">
+                        Ćwiczenia
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

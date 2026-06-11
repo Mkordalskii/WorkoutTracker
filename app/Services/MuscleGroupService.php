@@ -9,7 +9,7 @@ class MuscleGroupService
     public function getAll()
     {
         return MuscleGroup::where('is_active', true)
-        ->orderBy('name')
+        ->orderBy('id')
         ->get();
     }
     public function getById(int $id)

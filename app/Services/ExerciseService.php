@@ -23,7 +23,7 @@ class ExerciseService
         }
 
         return $query
-            ->orderBy('name')
+            ->orderBy('id')
             ->get();
     }
     public function getById(int $id)
