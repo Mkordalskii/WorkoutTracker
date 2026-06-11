@@ -46,7 +46,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password' => 'hashed', //hashuje hasło dlatego teoretycznie w auth nie potrzebujemy make::hash, ale może być
             'is_active' => 'boolean',
         ];
     }

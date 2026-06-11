@@ -42,63 +42,96 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('muscle-groups.index') }}">
-            Workout Tracker
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('muscle-groups.index') }}">
+                Workout Tracker
+            </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a href="{{ route('muscle-groups.index') }}" class="nav-link">
-                        Grupy mięśniowe
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('exercises.index') }}" class="nav-link">
-                        Ćwiczenia
-                    </a>
-                </li>
-            </ul>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto">
+                    @auth
+                    <li class="nav-item">
+                        <a href="{{ route('muscle-groups.index') }}" class="nav-link">
+                            Grupy mięśniowe
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('exercises.index') }}" class="nav-link">
+                            Ćwiczenia
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            {{ auth()->user()->name }}
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+
+                            <button type="submit" class="btn btn-outline-light btn-sm ms-2">
+                                Wyloguj
+                            </button>
+                        </form>
+                    </li>
+                    @else
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="nav-link">
+                            Logowanie
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('register') }}" class="nav-link">
+                            Rejestracja
+                        </a>
+                    </li>
+                    @endauth
+
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<main class="container page-wrapper">
-    <div class="page-card">
+    <main class="container page-wrapper">
+        <div class="page-card">
 
-        @yield('header')
+            @yield('header')
 
-        <hr>
+            <hr>
 
-        @if(session('success'))
+            @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
-        @endif
+            @endif
 
-        @if($errors->any())
+            @if($errors->any())
             <div class="alert alert-danger">
                 <strong>Popraw błędy w formularzu:</strong>
                 <ul class="mb-0 mt-2">
                     @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                    <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
-        @endif
+            @endif
 
-        @yield('content')
+            @yield('content')
 
-    </div>
-</main>
+        </div>
+    </main>
 
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 </body>
+
 </html>
