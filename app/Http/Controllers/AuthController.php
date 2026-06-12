@@ -31,7 +31,7 @@ class AuthController extends Controller
                 ->withInput();
         }
 
-        return redirect()->route('exercises.index');
+        return redirect()->route('dashboard.index');
     }
 
     public function showRegister()
@@ -43,7 +43,7 @@ class AuthController extends Controller
     {
         $this->authService->register($request);
 
-        return redirect()->route('exercises.index')
+        return redirect()->route('dashboard.index')
             ->with('success', 'Konto zostało utworzone.');
     }
 

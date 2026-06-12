@@ -44,7 +44,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('muscle-groups.index') }}">
+            <a class="navbar-brand" href="{{ route('dashboard.index') }}">
                 Workout Tracker
             </a>
 
@@ -55,6 +55,11 @@
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto">
                     @auth
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.index') }}" class="nav-link">
+                            Dashboard
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('muscle-groups.index') }}" class="nav-link">
                             Grupy mięśniowe

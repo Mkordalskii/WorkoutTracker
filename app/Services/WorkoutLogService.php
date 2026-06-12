@@ -16,15 +16,15 @@ class WorkoutLogService
         $query = WorkoutLog::with('workout')
             ->where('user_id', Auth::id())
             ->where('is_active', true);
-
+        //filtrowanie po dacie wykonania
         if ($request) {
             if ($request->filled('performed_at')) {
                 $query->where('performed_at', $request->performed_at);
             }
-
+            //filtrowanie po nazwie treningu
             if ($request->filled('workout_name')) {
                 $query->whereHas('workout', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->workout_name . '%');
+                    $q->where('name', 'like', '%' . $request->workout_name . '%'); //użyty whereHas żeby dostać się do workout_name
                 });
             }
         }
@@ -86,6 +86,7 @@ class WorkoutLogService
             'exercise_notes.*' => 'nullable|string',
         ]);
 
+        //tworzymy transakcje bo zapisujemy dane do dwóch tabel workout_logs i workout_log_exercises
         DB::transaction(function () use ($request, $workout) {
             $workoutLog = WorkoutLog::create([
                 'user_id' => Auth::id(),
@@ -95,7 +96,7 @@ class WorkoutLogService
                 'summary' => $request->summary,
                 'is_active' => true,
             ]);
-
+            //pętla przechodząca po wszystkich ćwiczeniach wysłanych z formularza
             foreach ($request->exercise_id as $index => $exerciseId) {
                 WorkoutLogExercise::create([
                     'workout_log_id' => $workoutLog->id,

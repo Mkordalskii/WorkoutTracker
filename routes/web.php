@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\MuscleGroupController;
 use App\Http\Controllers\WorkoutController;
@@ -9,6 +11,9 @@ use App\Http\Controllers\WorkoutLogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('dashboard.index');
+    }
     return redirect()->route('login');
 });
 //autoryzacja
@@ -115,4 +120,7 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/workout-logs/{id}', [WorkoutLogController::class, 'destroy'])
         ->name('workout-logs.destroy');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard.index');
 });
