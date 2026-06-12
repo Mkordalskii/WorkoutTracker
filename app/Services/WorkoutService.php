@@ -83,4 +83,20 @@ class WorkoutService
 
         return $workout;
     }
+
+    public function getDetails(int $id)
+    {
+        return Workout::with([
+                'workoutExercises' => function ($query) {
+                    $query->where('is_active', true)
+                        ->orderBy('order_number')
+                        ->orderBy('id');
+                },
+                'workoutExercises.exercise.muscleGroup'
+            ])
+            ->where('is_active', true)
+            ->where('user_id', Auth::id())
+            ->where('id', $id)
+            ->firstOrFail();
+    }
 }

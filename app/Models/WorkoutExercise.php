@@ -24,7 +24,7 @@ class WorkoutExercise extends Model
     {
         return $this->belongsTo(Workout::class);
     }
-    public function exercies()
+    public function exercise()
     {
         return $this->belongsTo(Exercise::class);
     }

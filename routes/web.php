@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\MuscleGroupController;
 use App\Http\Controllers\WorkoutController;
+use App\Http\Controllers\WorkoutExerciseController;
+use App\Http\Controllers\WorkoutLogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -80,4 +82,37 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/workouts/{id}', [WorkoutController::class, 'destroy'])
         ->name('workouts.destroy');
+
+    Route::get('/workouts/{id}', [WorkoutController::class, 'show'])
+        ->name('workouts.show');
+
+    Route::get('/workouts/{workoutId}/exercises/create', [WorkoutExerciseController::class, 'create'])
+        ->name('workout-exercises.create');
+
+    Route::post('/workouts/{workoutId}/exercises', [WorkoutExerciseController::class, 'store'])
+        ->name('workout-exercises.store');
+
+    Route::get('/workout-exercises/{id}/edit', [WorkoutExerciseController::class, 'edit'])
+        ->name('workout-exercises.edit');
+
+    Route::put('/workout-exercises/{id}', [WorkoutExerciseController::class, 'update'])
+        ->name('workout-exercises.update');
+
+    Route::delete('/workout-exercises/{id}', [WorkoutExerciseController::class, 'destroy'])
+        ->name('workout-exercises.destroy');
+
+    Route::get('/workout-logs', [WorkoutLogController::class, 'index'])
+        ->name('workout-logs.index');
+
+    Route::get('/workouts/{workoutId}/logs/create', [WorkoutLogController::class, 'create'])
+        ->name('workout-logs.create');
+
+    Route::post('/workouts/{workoutId}/logs', [WorkoutLogController::class, 'store'])
+        ->name('workout-logs.store');
+
+    Route::get('/workout-logs/{id}', [WorkoutLogController::class, 'show'])
+        ->name('workout-logs.show');
+
+    Route::delete('/workout-logs/{id}', [WorkoutLogController::class, 'destroy'])
+        ->name('workout-logs.destroy');
 });

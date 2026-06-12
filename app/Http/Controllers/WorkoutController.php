@@ -63,4 +63,13 @@ class WorkoutController extends Controller
             ->route('workouts.index')
             ->with('success', 'Trening został dezaktywowany.');
     }
+
+    public function show(int $id)
+{
+    $workout = $this->workoutService->getDetails($id);
+
+    return view('workouts.show', [
+        'workout' => $workout,
+    ]);
+}
 }

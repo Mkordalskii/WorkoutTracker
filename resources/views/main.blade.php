@@ -74,8 +74,14 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('workout-logs.index') }}" class="nav-link">
+                            Historia
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <span class="nav-link">
-                            {{ auth()->user()->name }}
+                            Użytkownik: {{ auth()->user()->name }}
                         </span>
                     </li>
 
@@ -83,7 +89,7 @@
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
 
-                            <button type="submit" class="btn btn-outline-light btn-sm ms-2">
+                            <button type="submit" class="btn btn-outline-light btn-sm mx-auto">
                                 Wyloguj
                             </button>
                         </form>
