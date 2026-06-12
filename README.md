@@ -1,59 +1,328 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Workout Tracker
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Workout Tracker is a web application created as a university project using the Laravel framework. The main goal of the application is to allow users to plan, manage and analyze their workouts. The system is available only for authenticated users, and each user can manage only their own workout data.
 
-## About Laravel
+## Project Description
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The application allows users to create workout plans, assign exercises to workouts, define training parameters and register completed workout sessions. It also includes basic progress tracking through workout history.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The project was built with a clear MVC-based structure and an additional service layer to separate business logic from controllers.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Main Features
 
-## Learning Laravel
+### Authentication
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+* User registration
+* User login
+* Password hashing
+* Logout
+* Access to the application only for logged-in users
+* Account activation status using `is_active`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Muscle Groups Management
 
-## Laravel Sponsors
+* Displaying muscle groups
+* Adding new muscle groups
+* Editing existing muscle groups
+* Deactivating muscle groups instead of deleting them permanently
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Exercises Management
 
-### Premium Partners
+* Displaying exercises
+* Adding new exercises
+* Editing exercises
+* Assigning exercises to muscle groups
+* Searching exercises by name
+* Filtering exercises by muscle group
+* Deactivating exercises
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Workouts Management
 
-## Contributing
+* Creating workouts
+* Editing workouts
+* Displaying only workouts of the currently logged-in user
+* Searching workouts by name
+* Filtering workouts by date
+* Deactivating workouts
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Assigning Exercises to Workouts
 
-## Code of Conduct
+* Many-to-many relationship between workouts and exercises
+* Adding exercises from the global exercise list to a user's workout
+* Defining planned parameters:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  * sets
+  * repetitions
+  * weight
+  * order number
+  * notes
+* Editing assigned exercise parameters
+* Removing exercises from a workout
 
-## Security Vulnerabilities
+### Workout History and Progress Tracking
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* Registering completed workouts
+* Saving actual exercise results:
 
-## License
+  * actual sets
+  * actual repetitions
+  * actual weight
+  * notes
+* Displaying workout history
+* Filtering workout history by workout name and date
+* Viewing details of completed workouts
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Dashboard
+
+* Summary of active workouts
+* Summary of completed workouts
+* Number of available exercises
+* List of recently added workouts
+* List of recently completed workouts
+
+## Technologies Used
+
+* PHP
+* Laravel
+* MySQL
+* XAMPP
+* Blade templates
+* Bootstrap
+* HTML
+* CSS
+
+## Database Structure
+
+The application uses the default Laravel tables for authentication and sessions:
+
+* `users`
+* `sessions`
+* `password_reset_tokens`
+
+Additional project tables:
+
+* `muscle_groups`
+* `exercises`
+* `workouts`
+* `workout_exercises`
+* `workout_logs`
+* `workout_log_exercises`
+
+## Database Relationships
+
+### Users and Workouts
+
+One user can have many workouts.
+
+```text
+users 1 --- * workouts
+```
+
+### Muscle Groups and Exercises
+
+One muscle group can have many exercises.
+
+```text
+muscle_groups 1 --- * exercises
+```
+
+### Workouts and Exercises
+
+A workout can contain many exercises, and one exercise can be used in many workouts.
+
+This relationship is handled by the `workout_exercises` table.
+
+```text
+workouts * --- * exercises
+```
+
+### Workouts and Workout Logs
+
+One workout can have many completed workout logs.
+
+```text
+workouts 1 --- * workout_logs
+```
+
+### Workout Logs and Exercise Results
+
+One workout log can contain many exercise results.
+
+```text
+workout_logs 1 --- * workout_log_exercises
+```
+
+## Application Structure
+
+The project uses a service layer to keep controllers clean and readable.
+
+Example structure:
+
+```text
+app/
+├── Http/
+│   └── Controllers/
+│       ├── AuthController.php
+│       ├── DashboardController.php
+│       ├── ExerciseController.php
+│       ├── MuscleGroupController.php
+│       ├── WorkoutController.php
+│       ├── WorkoutExerciseController.php
+│       └── WorkoutLogController.php
+│
+├── Models/
+│   ├── Exercise.php
+│   ├── MuscleGroup.php
+│   ├── User.php
+│   ├── Workout.php
+│   ├── WorkoutExercise.php
+│   ├── WorkoutLog.php
+│   └── WorkoutLogExercise.php
+│
+└── Services/
+    ├── AuthService.php
+    ├── DashboardService.php
+    ├── ExerciseService.php
+    ├── MuscleGroupService.php
+    ├── WorkoutService.php
+    ├── WorkoutExerciseService.php
+    └── WorkoutLogService.php
+```
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/workout-tracker.git
+```
+
+### 2. Go to the project directory
+
+```bash
+cd WorkoutTracker
+```
+
+### 3. Install PHP dependencies
+
+```bash
+composer install
+```
+
+### 4. Create the `.env` file
+
+Copy the example environment file:
+
+```bash
+copy .env.example .env
+```
+
+On Linux/macOS:
+
+```bash
+cp .env.example .env
+```
+
+### 5. Generate application key
+
+```bash
+php artisan key:generate
+```
+
+### 6. Configure database connection
+
+In the `.env` file, set your database configuration:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=WorkoutTracker
+DB_USERNAME=root
+DB_PASSWORD=
+
+SESSION_DRIVER=database
+```
+
+### 7. Create the database
+
+Create a MySQL database named:
+
+```text
+WorkoutTracker
+```
+
+You can do this in phpMyAdmin or by using SQL:
+
+```sql
+CREATE DATABASE WorkoutTracker CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+```
+
+### 8. Import database structure
+
+Import the provided SQL file into the `WorkoutTracker` database using phpMyAdmin.
+
+### 9. Clear configuration cache
+
+```bash
+php artisan optimize:clear
+```
+
+### 10. Run the application
+
+```bash
+php artisan serve
+```
+
+The application should be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Usage
+
+After starting the application:
+
+1. Open the application in the browser.
+2. Register a new user account.
+3. Log in.
+4. Add muscle groups.
+5. Add exercises and assign them to muscle groups.
+6. Create a workout.
+7. Add exercises to the workout.
+8. Register completed workouts.
+9. View workout history and progress.
+
+## Security and Validation
+
+The application includes:
+
+* Password hashing
+* Authentication middleware
+* Form validation
+* Access control based on the currently logged-in user
+* Protection against viewing or modifying another user's workouts
+* CSRF protection in forms
+
+## Soft Deactivation
+
+The project uses the `is_active` column in selected tables to deactivate records instead of deleting them permanently.
+
+This applies to:
+
+* users
+* muscle groups
+* exercises
+* workouts
+* workout logs
+
+The `workout_exercises` table is an exception. Removing an exercise from a workout deletes the relation from the database because it only represents the current assignment of an exercise to a workout.
+
+## Project Purpose
+
+This project was created for educational purposes as part of university coursework. Its main goal is to demonstrate basic Laravel application development, including authentication, CRUD operations, relational database design, validation, Blade views and service-based application logic.
+
+## Author
+
+Created as a university project by Maciej Kordalski.
