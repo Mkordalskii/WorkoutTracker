@@ -28,7 +28,7 @@ class AuthController extends Controller
                 ->withErrors([
                     'email' => 'Nieprawidłowy email, hasło lub konto jest nieaktywne.',
                 ])
-                ->withInput();
+                ->withInput(); //wpisany przez użytkownika login i hasło zostanie w inpucie
         }
 
         return redirect()->route('dashboard.index');
