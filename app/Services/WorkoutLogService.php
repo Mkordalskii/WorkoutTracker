@@ -71,7 +71,7 @@ class WorkoutLogService
             'summary' => 'nullable|string',
 
             'exercise_id' => 'required|array',
-            'exercise_id.*' => 'required|exists:exercises,id',
+            'exercise_id.*' => 'required|exists:exercises,id', // gwiazdka oznacza, że walidacja dotyczy każdego elementu tablicy exercise_id
 
             'actual_sets' => 'required|array',
             'actual_sets.*' => 'required|integer|min:1|max:100',

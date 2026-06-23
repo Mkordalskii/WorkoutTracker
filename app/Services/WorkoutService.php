@@ -84,6 +84,7 @@ class WorkoutService
         return $workout;
     }
 
+    // Pobranie szczegółów treningu wraz z ćwiczeniami i grupami mięśniowymi
     public function getDetails(int $id)
     {
         return Workout::with([
